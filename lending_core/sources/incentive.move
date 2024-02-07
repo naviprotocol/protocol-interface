@@ -8,6 +8,7 @@ module lending_core::incentive {
     use sui::balance::{Balance};
     use sui::tx_context::{TxContext};
     use lending_core::storage::{Storage};
+    use lending_core::account::{AccountCap};
 
     friend lending_core::lending;
     friend lending_core::incentive_v2;
