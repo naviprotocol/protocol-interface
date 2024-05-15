@@ -1,6 +1,7 @@
 [package]
 name = "oracle"
 version = "0.0.1"
+published-at = "0x1951eff08b3fd5bd134df6787ec9ec533c682d74277b824dbd53e440926901ad"
 
 [dependencies.Sui]
 git = "https://github.com/MystenLabs/sui.git"
@@ -9,4 +10,4 @@ rev = "mainnet"
 
 [addresses]
 sui = "0x02"
-oracle = "0x0"
+oracle = "0xca441b44943c16be0e6e23c5a955bb971537ea3289ae8016fbf33fffe1fd210f"

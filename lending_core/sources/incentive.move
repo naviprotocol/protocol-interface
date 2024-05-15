@@ -1,4 +1,3 @@
-#[allow(unused_field)]
 module lending_core::incentive {
     use std::ascii::{String};
 
@@ -8,10 +7,12 @@ module lending_core::incentive {
     use sui::balance::{Balance};
     use sui::tx_context::{TxContext};
     use lending_core::storage::{Storage};
+    use lending_core::account::{AccountCap};
 
     friend lending_core::lending;
     friend lending_core::incentive_v2;
 
+    #[allow(unused_field)]
     struct IncentiveBal<phantom CoinType> has key, store {
         id: UID,
         asset: u8,
@@ -20,6 +21,7 @@ module lending_core::incentive {
         balance: Balance<CoinType>
     }
 
+    #[allow(unused_field)]
     struct PoolInfo has store {
         id: u8,
         last_update_time: u64,
@@ -35,6 +37,7 @@ module lending_core::incentive {
         oracle_ids: vector<u8>,
     }
 
+    #[allow(unused_field)]
     struct Incentive has key, store {
         id: UID,
         creator: address,
@@ -45,27 +48,12 @@ module lending_core::incentive {
         assets: vector<u8>,
     }
 
-    struct PoolOwnerSetting has copy, drop {
-        sender: address,
-        owner: u256,
-        value: bool,
-    }
-
-    struct PoolAdminSetting has copy, drop {
-        sender: address,
-        admin: u256,
-        value: bool,
-    }
-
-    struct IncentiveOwnerCap has key, store {
-        id: UID,
-    }
-
-    struct IncentiveAdminCap has key, store {
-        id: UID,
-    }
 
     native public entry fun claim_reward<CoinType>(incentive: &mut Incentive, bal: &mut IncentiveBal<CoinType>, clock: &Clock, storage: &mut Storage, account: address, ctx: &mut TxContext);
+
+    native public fun claim_reward_non_entry<CoinType>(incentive: &mut Incentive, bal: &mut IncentiveBal<CoinType>, clock: &Clock, storage: &mut Storage, ctx: &mut TxContext): Balance<CoinType>;
+
+    native public fun claim_reward_with_account_cap<CoinType>(incentive: &mut Incentive, bal: &mut IncentiveBal<CoinType>, clock: &Clock, storage: &mut Storage, account_cap: &AccountCap): Balance<CoinType>;
 
     native public fun get_pool_count(incentive: &Incentive, asset: u8): u64;
 

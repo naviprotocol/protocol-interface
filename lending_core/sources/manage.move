@@ -1,0 +1,1 @@
+module lending_core::manage {}

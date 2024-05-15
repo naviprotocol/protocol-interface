@@ -4,8 +4,6 @@ module lending_core::logic {
     use oracle::oracle::{PriceOracle};
     use lending_core::storage::{Storage};
 
-    friend lending_core::lending;
-
     native public fun is_health(clock: &Clock, oracle: &PriceOracle, storage: &mut Storage, user: address): bool;
 
     native public fun user_health_factor_batch(clock: &Clock, oracle: &PriceOracle, storage: &mut Storage, users: vector<address>): vector<u256>;

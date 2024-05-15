@@ -1,24 +1,9 @@
-#[allow(unused_field)]
 module lending_core::storage {
     use std::ascii::{String};
-
     use sui::object::{UID};
     use sui::table::{Table};
-    use sui::tx_context::{TxContext};
 
-    use lending_core::pool::{Pool, PoolAdminCap};
-
-
-    friend lending_core::logic;
-
-    struct OwnerCap has key, store {
-        id: UID,
-    }
-
-    struct StorageAdminCap has key, store {
-        id: UID,
-    }
-
+    #[allow(unused_field)]
     struct Storage has key, store {
         id: UID,
         version: u64,
@@ -29,6 +14,7 @@ module lending_core::storage {
         user_info: Table<address, UserInfo>
     }
 
+    #[allow(unused_field)]
     struct ReserveData has store {
         id: u8,
         oracle_id: u8,
@@ -53,25 +39,28 @@ module lending_core::storage {
         reserve_field_c: u256,
     }
 
+    #[allow(unused_field)]
     struct UserInfo has store {
         collaterals: vector<u8>,
         loans: vector<u8>
     }
 
+    #[allow(unused_field)]
     struct TokenBalance has store {
         user_state: Table<address, u256>,
         total_supply: u256,
     }
 
+    #[allow(unused_field)]
     struct BorrowRateFactors has store {
         base_rate: u256,
         multiplier: u256,
         jump_rate_multiplier: u256,
-       
         reserve_factor: u256,
         optimal_utilization: u256
     }
 
+    #[allow(unused_field)]
     struct LiquidationFactors has store {
         ratio: u256, 
         bonus: u256,
@@ -113,8 +102,4 @@ module lending_core::storage {
     native public fun get_borrow_rate_factors(storage: &mut Storage, asset: u8): (u256, u256, u256, u256, u256);
 
     native public fun get_liquidation_factors(storage: &mut Storage, asset: u8): (u256, u256, u256);
-
-    native public fun withdraw_treasury<CoinType>(_: &StorageAdminCap, pool_admin_cap: &PoolAdminCap, storage: &mut Storage, asset: u8, pool: &mut Pool<CoinType>, amount: u64, recipient: address, ctx: &mut TxContext);
-
-    native public fun destory_user(_: &StorageAdminCap, _storage: &mut Storage);
 }
