@@ -15,11 +15,6 @@ module lending_core::incentive_v2 {
     use lending_core::storage::{Storage};
 
     #[allow(unused_field)]
-    struct OwnerCap has key, store {
-        id: UID,
-    }
-
-    #[allow(unused_field)]
     struct Incentive has key, store {
         id: UID,
         version: u64,
@@ -70,10 +65,6 @@ module lending_core::incentive_v2 {
 
     native public fun claim_reward_with_account_cap<T>(clock: &Clock, incentive: &mut Incentive, funds_pool: &mut IncentiveFundsPool<T>, storage: &mut Storage, asset_id: u8, option: u8, account_cap: &AccountCap): Balance<T>;
 
-    native public fun claim_reward_non_entry<T>(clock: &Clock, incentive: &mut Incentive, funds_pool: &mut IncentiveFundsPool<T>, storage: &mut Storage, asset_id: u8, option: u8, ctx: &TxContext): Balance<T>;
-    
-    native public fun claim_reward_with_account_cap<T>(clock: &Clock, incentive: &mut Incentive, funds_pool: &mut IncentiveFundsPool<T>, storage: &mut Storage, asset_id: u8, option: u8, account_cap: &AccountCap): Balance<T>;
-    
     native public fun get_pool_from_funds_pool<T>(incentive: &Incentive, funds_pool: &IncentiveFundsPool<T>, asset_id: u8, option: u8): vector<address>;
 
     native public fun calculate_release_rate(pool: &IncentivePool): u256;

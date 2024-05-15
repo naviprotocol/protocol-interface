@@ -9,9 +9,6 @@ module lending_core::incentive {
     use lending_core::storage::{Storage};
     use lending_core::account::{AccountCap};
 
-    friend lending_core::lending;
-    friend lending_core::incentive_v2;
-
     #[allow(unused_field)]
     struct IncentiveBal<phantom CoinType> has key, store {
         id: UID,
@@ -55,10 +52,6 @@ module lending_core::incentive {
 
     native public fun claim_reward_with_account_cap<CoinType>(incentive: &mut Incentive, bal: &mut IncentiveBal<CoinType>, clock: &Clock, storage: &mut Storage, account_cap: &AccountCap): Balance<CoinType>;
 
-    native public fun claim_reward_non_entry<CoinType>(incentive: &mut Incentive, bal: &mut IncentiveBal<CoinType>, clock: &Clock, storage: &mut Storage, ctx: &mut TxContext): Balance<CoinType>;
-
-    native public fun claim_reward_with_account_cap<CoinType>(incentive: &mut Incentive, bal: &mut IncentiveBal<CoinType>, clock: &Clock, storage: &mut Storage, account_cap: &AccountCap): Balance<CoinType>;
-    
     native public fun get_pool_count(incentive: &Incentive, asset: u8): u64;
 
     native public fun get_pool_info(incentive: &Incentive, asset: u8, pool_idx: u64): (u64, u64, u256, u8);

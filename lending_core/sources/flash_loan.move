@@ -4,9 +4,6 @@ module lending_core::flash_loan {
     use sui::object::{UID};
     use sui::table::{Table};
 
-    friend lending_core::manage;
-    friend lending_core::lending;
-
     #[allow(unused_field)]
     struct Config has key, store {
         id: UID,
