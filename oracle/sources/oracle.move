@@ -19,4 +19,6 @@ module oracle::oracle {
     }
 
     native public fun get_token_price(clock: &Clock, price_oracle: &PriceOracle, oracle_id: u8): (bool, u256, u8);
+
+    native public fun safe_decimal(price_oracle: &mut PriceOracle, oracle_id: u8): u8;
 }
