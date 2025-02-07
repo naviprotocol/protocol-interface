@@ -117,6 +117,6 @@ module lending_core::incentive_v3 {
     
     native public fun get_user_claimable_rewards(clock: &Clock, storage: &mut Storage, incentive: &Incentive, user: address): vector<ClaimableReward>;
 
+    // parse the claimable rewards to return the asset coin types, reward coin types, user total rewards, user claimed rewards, and rule ids
     native public fun parse_claimable_rewards(claimable_rewards: vector<ClaimableReward>): (vector<String>, vector<String>, vector<u256>, vector<u256>, vector<vector<address>>);
-
 }
