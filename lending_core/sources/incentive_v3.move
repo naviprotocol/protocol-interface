@@ -116,4 +116,7 @@ module lending_core::incentive_v3 {
     native public fun get_balance_value_by_reward_fund<T>(reward_fund: &RewardFund<T>): u64;
     
     native public fun get_user_claimable_rewards(clock: &Clock, storage: &mut Storage, incentive: &Incentive, user: address): vector<ClaimableReward>;
+
+    native public fun parse_claimable_rewards(claimable_rewards: vector<ClaimableReward>): (vector<String>, vector<String>, vector<u256>, vector<u256>, vector<vector<address>>);
+
 }
