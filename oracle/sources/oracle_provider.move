@@ -1,14 +1,13 @@
 module oracle::oracle_provider {
+
     use std::ascii::{String};
 
-    #[allow(unused_field)]
     struct OracleProviderConfig has store {
         provider: OracleProvider,
         enable: bool,
         pair_id: vector<u8>,
     }
 
-    #[allow(unused_field)]
     struct OracleProvider has copy, store, drop {
         name: String
     }
@@ -23,9 +22,12 @@ module oracle::oracle_provider {
 
     native public fun pyth_provider(): OracleProvider;
 
+    native public fun switchboard_provider(): OracleProvider;
+
     native public fun new_empty_provider(): OracleProvider;
 
     native public fun to_string(f: &OracleProvider): String;
 
     native public fun is_empty(f: &OracleProvider): bool;
+
 }

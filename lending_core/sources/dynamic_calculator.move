@@ -1,8 +1,10 @@
 module lending_core::dynamic_calculator {
-    use sui::clock::{Clock};
+
+    use sui::address;
+    use sui::clock::{Self, Clock};
     use oracle::oracle::{PriceOracle};
-    use lending_core::pool::{ Pool};
-    use lending_core::storage::{Storage};
+    use lending_core::pool::{Self, Pool};
+    use lending_core::storage::{Self, Storage};
 
     native public fun dynamic_health_factor<CoinType>(clock: &Clock, storage: &mut Storage, oracle: &PriceOracle, pool: &mut Pool<CoinType>, user: address, asset: u8, estimate_supply_value: u64, estimate_borrow_value: u64, is_increase: bool): u256;
 
@@ -24,9 +26,10 @@ module lending_core::dynamic_calculator {
 
     native public fun dynamic_calculate_apy<CoinType>(clock: &Clock, storage: &mut Storage, pool: &mut Pool<CoinType>, asset: u8, estimate_supply_value: u64, estimate_borrow_value: u64, is_increase: bool): (u256, u256);
 
-    native public fun dynamic_calculate_borrow_rate( clock: &Clock, storage: &mut Storage, asset: u8, estimate_supply_value: u256, estimate_borrow_value: u256, is_increase: bool): u256;
-    
+    native public fun dynamic_calculate_borrow_rate(clock: &Clock, storage: &mut Storage, asset: u8, estimate_supply_value: u256, estimate_borrow_value: u256, is_increase: bool): u256;
+
     native public fun dynamic_calculate_supply_rate(clock: &Clock, storage: &mut Storage, asset: u8, borrow_rate: u256, estimate_supply_value: u256, estimate_borrow_value: u256, is_increase: bool): u256;
 
     native public fun dynamic_caculate_utilization(clock: &Clock, storage: &mut Storage, asset: u8, estimate_supply_value: u256, estimate_borrow_value: u256, is_increase: bool): u256;
+
 }

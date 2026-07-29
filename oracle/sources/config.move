@@ -1,11 +1,13 @@
 module oracle::config {
+
+    use std::vector;
     use std::ascii::{String};
     use sui::object::{UID};
     use sui::table::{Table};
+    use oracle::oracle_version::{Self as version};
     use oracle::oracle_provider::{OracleProvider, OracleProviderConfig};
 
     // Structs
-    #[allow(unused_field)]
     struct OracleConfig has key, store {
         id: UID,
         version: u64,
@@ -14,7 +16,6 @@ module oracle::config {
         feeds: Table<address, PriceFeed>,
     }
 
-    #[allow(unused_field)]
     struct PriceFeed has store {
         id: UID,
         enable: bool, // when the decentralized price of a certain token goes wrong, it can be disable
@@ -35,12 +36,141 @@ module oracle::config {
         history: History,
     }
 
-    #[allow(unused_field)]
     struct History has copy, store {
         price: u256,
         updated_time: u64,
     }
 
+    // Events
+    struct ConfigCreated has copy, drop {
+        sender: address,
+        id: address,
+    }
+
+    struct ConfigSetPaused has copy, drop {
+        config: address,
+        value: bool,
+        before_value: bool,
+    }
+
+    struct PriceFeedCreated has copy, drop {
+        sender: address,
+        config: address,
+        feed_id: address,
+    }
+
+    struct PriceFeedSetEnable has copy, drop {
+        config: address,
+        feed_id: address,
+        value: bool,
+        before_value: bool,
+    }
+
+    struct PriceFeedSetMaxTimestampDiff has copy, drop {
+        config: address,
+        feed_id: address,
+        value: u64,
+        before_value: u64,
+    }
+
+    struct PriceFeedSetPriceDiffThreshold1 has copy, drop {
+        config: address,
+        feed_id: address,
+        value: u64,
+        before_value: u64,
+    }
+
+    struct PriceFeedSetPriceDiffThreshold2 has copy, drop {
+        config: address,
+        feed_id: address,
+        value: u64,
+        before_value: u64,
+    }
+
+    struct PriceFeedSetMaxDurationWithinThresholds has copy, drop {
+        config: address,
+        feed_id: address,
+        value: u64,
+        before_value: u64,
+    }
+
+    struct PriceFeedSetMaximumAllowedSpanPercentage has copy, drop {
+        config: address,
+        feed_id: address,
+        value: u64,
+        before_value: u64,
+    }
+
+    struct PriceFeedSetMaximumEffectivePrice has copy, drop {
+        config: address,
+        feed_id: address,
+        value: u256,
+        before_value: u256,
+    }
+
+    struct PriceFeedSetMinimumEffectivePrice has copy, drop {
+        config: address,
+        feed_id: address,
+        value: u256,
+        before_value: u256,
+    }
+
+    struct PriceFeedSetOracleId has copy, drop {
+        config: address,
+        feed_id: address,
+        value: u8,
+        before_value: u8,
+    }
+
+    struct SetOracleProvider has copy, drop {
+        config: address,
+        feed_id: address,
+        is_primary: bool, // primary: true, secondary: false
+        provider: String,
+        before_provider: String,
+    }
+
+    struct OracleProviderConfigCreated has copy, drop {
+        config: address,
+        feed_id: address,
+        provider: String,
+        pair_id: vector<u8>,
+    }
+
+    struct OracleProviderConfigSetPairId has copy, drop {
+        config: address,
+        feed_id: address,
+        provider: String,
+        value: vector<u8>,
+        before_value: vector<u8>,
+    }
+
+    struct OracleProviderConfigSetEnable has copy, drop {
+        config: address,
+        feed_id: address,
+        provider: String,
+        value: bool,
+        before_value: bool,
+    }
+
+    struct PriceFeedSetHistoricalPriceTTL has copy, drop {
+        config: address,
+        feed_id: address,
+        value: u64,
+        before_value: u64,
+    }
+
+    struct PriceFeedDiffThreshold2TimerUpdated has copy, drop {
+        feed_id: address,
+        updated_at: u64,
+    }
+
+    struct PriceFeedDiffThreshold2TimerReset has copy, drop {
+        feed_id: address,
+        started_at: u64,
+    }
+
+    // Friend Functions()
     native public fun version_verification(cfg: &OracleConfig);
 
     native public fun is_price_feed_exists<CoinType>(cfg: &OracleConfig, oracle_id: u8): bool;
@@ -142,6 +272,7 @@ module oracle::config {
 
     native public fun get_updated_time_from_history(history: &History): u64;
 
+    //
     native public fun is_secondary_oracle_available(price_feed: &PriceFeed): bool;
-}
 
+}
